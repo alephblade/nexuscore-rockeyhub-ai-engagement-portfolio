@@ -1,0 +1,22 @@
+﻿{
+  "_note": "Representative sample — all data is fictional. No production values.",
+  "session_id": "sample-uuid-0001",
+  "wa_id": "525512345678",
+  "current_state": "CHECKOUT_CONFIRM",
+  "context_data": {
+    "intent": "products",
+    "market": "MX",
+    "product_key": "starter_pack_v1",
+    "purchase_mode": "one_time",
+    "quantity": 2
+  },
+  "updated_at": "2026-05-14T18:30:00Z",
+  "state_history": [
+    { "state": "START",              "transitioned_at": "2026-05-14T18:25:00Z" },
+    { "state": "WAIT_MARKET",        "transitioned_at": "2026-05-14T18:26:00Z" },
+    { "state": "WAIT_PRODUCT",       "transitioned_at": "2026-05-14T18:27:00Z" },
+    { "state": "WAIT_PURCHASE_MODE", "transitioned_at": "2026-05-14T18:28:00Z" },
+    { "state": "WAIT_QTY",          "transitioned_at": "2026-05-14T18:29:00Z" },
+    { "state": "CHECKOUT_CONFIRM",   "transitioned_at": "2026-05-14T18:30:00Z" }
+  ]
+}

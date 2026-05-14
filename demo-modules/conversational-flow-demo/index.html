@@ -1,0 +1,238 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Conversational Campaign Logic Demo — NexusCore AI / RockeyHub</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#07101F;--s1:#0D1B2E;--s2:#162338;--b1:#1E2E45;--b2:#2A3F5C;--indigo:#6366F1;--indigo-l:#818CF8;--emerald:#10B981;--amber:#F59E0B;--rose:#F43F5E;--sky:#0EA5E9;--purple:#A855F7;--text:#F0F4FF;--muted:#8CA0BF;--dim:#4B6080;--r:14px;--rs:9px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:2rem 1rem 5rem}
+.header{text-align:center;max-width:780px;margin:0 auto 2.5rem}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(99,102,241,.13);border:1px solid rgba(99,102,241,.28);color:var(--indigo-l);font-size:.68rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;padding:4px 14px;border-radius:999px;margin-bottom:1.25rem}
+h1{font-size:clamp(1.7rem,3.8vw,2.6rem);font-weight:700;line-height:1.15;margin-bottom:.5rem;background:linear-gradient(130deg,#fff 25%,var(--indigo-l) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub-brand{font-size:.82rem;color:var(--muted);margin-bottom:.65rem}.sub-brand span{color:var(--indigo-l);font-weight:600}
+.subtitle{color:var(--muted);font-size:.9rem;line-height:1.65;max-width:600px;margin:0 auto}
+/* Layout */
+.container{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:360px 1fr;gap:1.5rem}
+@media(max-width:780px){.container{grid-template-columns:1fr}}
+.card{background:var(--s1);border:1px solid var(--b1);border-radius:var(--r);padding:1.5rem}
+.card-title{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:1.1rem;display:flex;align-items:center;gap:8px}
+.dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.field{margin-bottom:1rem}
+label{display:block;font-size:.76rem;font-weight:500;color:var(--muted);margin-bottom:.4rem}
+select{width:100%;background:var(--s2);border:1px solid var(--b2);border-radius:var(--rs);color:var(--text);font-family:'Inter',sans-serif;font-size:.86rem;padding:.6rem .85rem;outline:none;cursor:pointer;transition:border-color .2s}
+select:focus{border-color:var(--indigo)}
+.btn{width:100%;padding:.78rem;border-radius:var(--rs);border:none;font-family:'Inter',sans-serif;font-size:.88rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,var(--indigo),var(--purple));color:#fff;transition:all .18s;margin-top:.25rem;letter-spacing:.01em}
+.btn:hover{opacity:.9;transform:translateY(-1px);box-shadow:0 6px 24px rgba(99,102,241,.35)}
+.btn:active{transform:translateY(0)}
+/* Output cards */
+.output-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:600px){.output-grid{grid-template-columns:1fr}}
+.out-card{background:var(--s2);border:1px solid var(--b1);border-radius:var(--rs);padding:1rem 1.1rem}
+.out-label{font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--dim);margin-bottom:.4rem}
+.out-value{font-size:.88rem;font-weight:600;line-height:1.45}
+.out-value.mono{font-family:'JetBrains Mono',monospace;font-size:.78rem;color:#A7F3D0;white-space:pre-wrap}
+/* Chips */
+.chip{display:inline-flex;align-items:center;padding:3px 10px;border-radius:999px;font-size:.7rem;font-weight:700;letter-spacing:.04em;margin-right:4px;margin-bottom:4px}
+.chip.green{background:rgba(16,185,129,.13);color:var(--emerald);border:1px solid rgba(16,185,129,.28)}
+.chip.amber{background:rgba(245,158,11,.13);color:var(--amber);border:1px solid rgba(245,158,11,.28)}
+.chip.rose{background:rgba(244,63,94,.13);color:var(--rose);border:1px solid rgba(244,63,94,.28)}
+.chip.sky{background:rgba(14,165,233,.13);color:var(--sky);border:1px solid rgba(14,165,233,.28)}
+.chip.purple{background:rgba(168,85,247,.13);color:var(--purple);border:1px solid rgba(168,85,247,.28)}
+.chip.indigo{background:rgba(99,102,241,.13);color:var(--indigo-l);border:1px solid rgba(99,102,241,.28)}
+/* Funnel viz */
+.funnel{display:flex;flex-direction:column;gap:3px;margin-top:.5rem}
+.f-step{display:flex;align-items:center;gap:.6rem;font-size:.75rem;padding:.4rem .7rem;border-radius:6px;border-left:3px solid transparent}
+.f-step.active{border-left-color:var(--emerald);background:rgba(16,185,129,.07)}
+.f-step.current{border-left-color:var(--indigo);background:rgba(99,102,241,.1);font-weight:700;color:#fff}
+.f-step.inactive{color:var(--dim)}
+.f-arrow{color:var(--dim);font-size:.65rem;margin-left:1.2rem}
+.divider{height:1px;background:var(--b1);margin:1.25rem 0}
+.footer{text-align:center;margin-top:3rem;color:var(--dim);font-size:.73rem}
+.footer a{color:var(--muted);text-decoration:none}
+.result-placeholder{color:var(--dim);font-style:italic;font-size:.83rem}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:1.25rem 0 .65rem}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="badge">Conversational Campaign Logic Demo</div>
+  <h1>NexusCore AI / RockeyHub</h1>
+  <p class="sub-brand">Powered by <span>NexusCore AI</span> &mdash; Portfolio Reference</p>
+  <p class="subtitle">Select the scenario parameters and run the engine. The demo returns the detected segment, conversation state, recommended message, next best action, handoff decision, QA checks required, and the analytics event that would fire.</p>
+</div>
+
+<div class="container">
+  <!-- INPUT PANEL -->
+  <div>
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:var(--indigo)"></span>Scenario Parameters</div>
+      <div class="field"><label>Market</label>
+        <select id="i-market"><option value="MX">Mexico (MX)</option><option value="US">USA (US)</option></select></div>
+      <div class="field"><label>User Intent</label>
+        <select id="i-intent">
+          <option value="product_information">Product Information</option>
+          <option value="pricing">Pricing / Cost</option>
+          <option value="checkout_ready">Ready to Buy</option>
+          <option value="shipping">Shipping Query</option>
+          <option value="support">Support / Help</option>
+          <option value="unrecognized">Unrecognized Input</option>
+        </select></div>
+      <div class="field"><label>Lead Stage</label>
+        <select id="i-stage">
+          <option value="new">New</option>
+          <option value="warm" selected>Warm</option>
+          <option value="checkout_ready">Checkout-Ready</option>
+        </select></div>
+      <div class="field"><label>Channel</label>
+        <select id="i-channel">
+          <option value="whatsapp">WhatsApp</option>
+          <option value="email">Email</option>
+        </select></div>
+      <div class="field"><label>Conversation State</label>
+        <select id="i-state">
+          <option value="START">START</option>
+          <option value="WAIT_MARKET">WAIT_MARKET</option>
+          <option value="WAIT_PRODUCT">WAIT_PRODUCT</option>
+          <option value="CHECKOUT_CONFIRM">CHECKOUT_CONFIRM</option>
+          <option value="HANDOFF">HANDOFF</option>
+        </select></div>
+      <button class="btn" onclick="runEngine()">▶ Run Engagement Engine</button>
+    </div>
+  </div>
+
+  <!-- OUTPUT PANEL -->
+  <div id="output-panel">
+    <div class="card">
+      <div class="card-title"><span class="dot" style="background:var(--emerald)"></span>Engine Output</div>
+      <p class="result-placeholder">Select parameters and run the engine to see the output.</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer" style="max-width:1120px;margin:3rem auto 0">
+  <p><strong>NexusCore AI / RockeyHub</strong> &mdash; AI Engagement & Checkout Orchestration &middot; <a href="https://rockeyhub.app" target="_blank">rockeyhub.app</a> &middot; <a href="https://github.com/alephblade/nexuscore-rockeyhub-ai-engagement-portfolio" target="_blank">GitHub</a></p>
+  <p style="margin-top:.4rem">Portfolio Reference Only &mdash; Not for reuse or redistribution.</p>
+</div>
+
+<script>
+const SEGMENTS = {
+  MX: { new: 'MX Cold Lead', warm: 'MX Engaged Prospect', checkout_ready: 'MX Buyer-Ready' },
+  US: { new: 'US Cold Lead', warm: 'US Engaged Prospect', checkout_ready: 'US Buyer-Ready' }
+};
+const STATES_MAP = {
+  START: 'START', WAIT_MARKET: 'WAIT_MARKET', WAIT_PRODUCT: 'WAIT_PRODUCT',
+  CHECKOUT_CONFIRM: 'CHECKOUT_CONFIRM', HANDOFF: 'HANDOFF'
+};
+const FLOW_STEPS = ['START','WAIT_MARKET','WAIT_PRODUCT','CHECKOUT_CONFIRM','Closed'];
+
+function runEngine() {
+  const market  = document.getElementById('i-market').value;
+  const intent  = document.getElementById('i-intent').value;
+  const stage   = document.getElementById('i-stage').value;
+  const channel = document.getElementById('i-channel').value;
+  const state   = document.getElementById('i-state').value;
+
+  // Segment
+  const segment = SEGMENTS[market][stage];
+
+  // Recommended state
+  let nextState = state, action = '', msgType = '', handoff = false, handoffReason = '';
+  if (state === 'HANDOFF') { handoff = true; handoffReason = 'Session already in HANDOFF — bot is silent.'; action = 'No action — awaiting human operator.'; }
+  else if (intent === 'support' || intent === 'unrecognized') { handoff = true; handoffReason = 'Intent requires human judgment.'; nextState = 'HANDOFF'; action = 'Transition to HANDOFF'; }
+  else if (intent === 'checkout_ready' && stage === 'new') { nextState = 'WAIT_PRODUCT'; action = 'Educate first — new lead not yet ready for direct checkout'; }
+  else if (intent === 'checkout_ready' && (stage === 'warm' || stage === 'checkout_ready')) { nextState = 'CHECKOUT_CONFIRM'; action = 'Proceed to checkout flow'; }
+  else if (intent === 'product_information') { nextState = 'WAIT_PRODUCT'; action = 'Show product catalog for market'; }
+  else if (intent === 'pricing') { nextState = state === 'WAIT_PRODUCT' ? 'CHECKOUT_CONFIRM' : 'WAIT_MARKET'; action = 'Route to pricing / checkout path'; }
+  else if (intent === 'shipping') { nextState = 'WAIT_MARKET'; action = 'Show shipping rules for selected market'; }
+
+  // Message
+  const msgs = {
+    product_information: { whatsapp: `Hi {{nombre}} 👋 Here are the options available in ${market}:\n\n[Interactive List → Products]\n\nSelect one to learn more.`, email: `Hi {{nombre}}, here is our product overview for ${market}. Let us know which one interests you.` },
+    pricing:             { whatsapp: `Hi {{nombre}}, pricing in ${market} starts from $45 USD. Want me to walk you through the options?`, email: `Hi {{nombre}}, please find the current pricing for ${market} below.` },
+    checkout_ready:      { whatsapp: stage === 'new' ? `Hi {{nombre}}, before we proceed, let me share a quick overview so you can choose the right option. 👇` : `Hi {{nombre}}, great! Let me generate your secure payment link. One moment...`, email: `Hi {{nombre}}, you can complete your purchase using the link below.` },
+    shipping:            { whatsapp: market === 'MX' ? `Shipping to Mexico (in USD):\n1–4 units → $15\n5–10 units → $25\n11–20 units → $40\n\nAnything else I can help you with?` : `Shipping within the USA: free on qualifying orders. Calculated at checkout.`, email: `Please find the shipping details for ${market} below.` },
+    support:             { whatsapp: `Hi {{nombre}}, I am connecting you with a team member who can help. Please stand by. 🙏`, email: `Hi {{nombre}}, a team member will reach out shortly.` },
+    unrecognized:        { whatsapp: `I did not quite catch that. Here is what I can help you with:\n\n[Menu: Products / Shipping / Support]`, email: `Could you clarify your request? We are happy to help.` }
+  };
+  const recommendedMsg = (msgs[intent] || msgs.unrecognized)[channel];
+
+  // Next best action
+  const nbas = {
+    product_information: 'Display interactive product list for market ' + market,
+    pricing:             'Show pricing table and route to checkout path',
+    checkout_ready:      stage === 'new' ? 'Send product overview before checkout' : 'Generate Stripe Checkout Session',
+    shipping:            'Display shipping rules for market ' + market,
+    support:             'Transition to HANDOFF — notify human operator',
+    unrecognized:        'Re-display main menu (fallback)'
+  };
+  const nba = nbas[intent];
+
+  // QA checks
+  const qaMap = {
+    product_information: ['Catalog filtered by market ('+market+')', 'Only bot_enabled products shown', 'Labels ≤ 24 chars', 'Fallback if catalog empty'],
+    pricing:             ['Price shown in correct currency (USD)', 'Shipping rule version logged', 'Market-specific pricing only'],
+    checkout_ready:      ['Catalog guardrails validated before Stripe call', 'Order draft created first', 'client_reference_id set to order_draft_id', 'Geo-fenced to '+market],
+    shipping:            ['Shipping rule version is current', 'Correct market displayed', 'Currency is USD'],
+    support:             ['HANDOFF state logged', 'Context data preserved for operator', 'Bot goes silent'],
+    unrecognized:        ['Fallback counter incremented', 'Menu re-shown max 2 times', 'HANDOFF offered on 3rd failure']
+  };
+  const qa = qaMap[intent] || [];
+
+  // Analytics event
+  const eventMap = {
+    product_information: 'product_interest_detected',
+    pricing:             'checkout_intent_detected',
+    checkout_ready:      stage === 'new' ? 'product_interest_detected' : 'checkout_started',
+    shipping:            'market_selected',
+    support:             'human_handoff_triggered',
+    unrecognized:        'fallback_triggered'
+  };
+  const analyticsEvent = eventMap[intent];
+
+  // Funnel position
+  const funnelPos = { START:0, WAIT_MARKET:1, WAIT_PRODUCT:2, CHECKOUT_CONFIRM:3, HANDOFF:-1 };
+  const currentPos = funnelPos[state] ?? 0;
+
+  // Render
+  const panel = document.getElementById('output-panel');
+  panel.innerHTML = `
+  <div class="card">
+    <div class="card-title"><span class="dot" style="background:var(--emerald)"></span>Engine Output</div>
+    <div class="output-grid">
+      <div class="out-card"><div class="out-label">Detected Segment</div><div class="out-value"><span class="chip purple">${segment}</span></div></div>
+      <div class="out-card"><div class="out-label">Conversation State</div><div class="out-value"><span class="chip indigo">${state}</span> → <span class="chip ${handoff?'rose':'green'}">${nextState}</span></div></div>
+      <div class="out-card"><div class="out-label">Channel</div><div class="out-value"><span class="chip sky">${channel.toUpperCase()}</span></div></div>
+      <div class="out-card"><div class="out-label">Analytics Event</div><div class="out-value"><span class="chip amber">${analyticsEvent}</span></div></div>
+    </div>
+    <div class="divider"></div>
+    <div class="out-card" style="margin-bottom:1rem"><div class="out-label">Recommended Message</div><div class="out-value mono">${recommendedMsg}</div></div>
+    <div class="output-grid">
+      <div class="out-card">
+        <div class="out-label">Next Best Action</div>
+        <div class="out-value">${nba}</div>
+        <div style="margin-top:.65rem"><div class="out-label">Human Handoff</div>
+          <div class="out-value"><span class="chip ${handoff?'rose':'green'}">${handoff?'YES — Escalate to human':'NO — Continue automation'}</span></div>
+          ${handoff?`<div style="font-size:.75rem;color:var(--amber);margin-top:.35rem">${handoffReason}</div>`:''}
+        </div>
+      </div>
+      <div class="out-card">
+        <div class="out-label">QA Checks Required</div>
+        ${qa.map(c=>`<div style="font-size:.77rem;color:var(--muted);margin-bottom:.3rem">✓ ${c}</div>`).join('')}
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="out-label">Funnel Position</div>
+    <div class="funnel">
+      ${FLOW_STEPS.map((s,i)=>{
+        const cls = state==='HANDOFF'&&s==='HANDOFF'?'current': i===currentPos?'current': i<currentPos?'active':'inactive';
+        return `<div class="f-step ${cls}"><span>${i===currentPos?'▶':i<currentPos?'✓':'○'}</span> ${s}</div>${i<FLOW_STEPS.length-1?'<div class="f-arrow" style="padding-left:.9rem">↓</div>':''}`;
+      }).join('')}
+    </div>
+  </div>`;
+}
+</script>
+</body>
+</html>

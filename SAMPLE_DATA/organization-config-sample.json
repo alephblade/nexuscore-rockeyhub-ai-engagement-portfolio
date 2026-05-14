@@ -1,0 +1,30 @@
+﻿{
+  "_note": "Representative sample — fictional organization configuration.",
+  "organization_id": "sample-org-uuid-0001",
+  "name": "Example Community — Alpha Org",
+  "plan": "pro",
+  "status": "active",
+  "created_at": "2026-01-15T00:00:00Z",
+  "system_config": {
+    "company_name": "Alpha Community",
+    "company_phone": "+52 55 0000 0000",
+    "whatsapp_mode": "api",
+    "ai_daily_limit_leaders": 20
+  },
+  "feature_flags": {
+    "allowed_whatsapp_mode": "api",
+    "is_university": true,
+    "is_private": false
+  },
+  "roles_summary": {
+    "super_master": 1,
+    "admin": 3,
+    "leader": 12
+  },
+  "stats": {
+    "total_members": 87,
+    "total_leads": 234,
+    "active_campaigns": 4,
+    "university_courses_assigned": 6
+  }
+}

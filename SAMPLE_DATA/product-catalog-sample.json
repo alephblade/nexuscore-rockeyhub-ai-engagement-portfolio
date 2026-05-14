@@ -1,0 +1,68 @@
+﻿{
+  "_note": "Representative sample — fictional SKUs, prices, and IDs. Structure mirrors product_catalog_matrix_view.",
+  "view_name": "product_catalog_matrix_view",
+  "products": [
+    {
+      "product_key": "starter_pack_v1",
+      "sku": "GBN-MX-SP-001",
+      "product_name": "Starter Pack — 30 day supply",
+      "bot_short_label": "Starter Pack (30 days)",
+      "bot_short_description": "Perfect for first-time users. 1 month supply.",
+      "bot_menu_enabled": true,
+      "bot_menu_order": 1,
+      "bot_checkout_enabled": true,
+      "global_active": true,
+      "market": "MX",
+      "currency": "USD",
+      "base_price_usd": 45.00,
+      "stripe_price_id": "price_SAMPLE_MX_001",
+      "stripe_env": "test",
+      "purchase_mode": "one_time",
+      "requires_human_review_above_qty": 4
+    },
+    {
+      "product_key": "pro_pack_v1",
+      "sku": "GBN-MX-PP-001",
+      "product_name": "Pro Pack — 90 day supply",
+      "bot_short_label": "Pro Pack (90 days)",
+      "bot_short_description": "Best value. 3 month supply with discount.",
+      "bot_menu_enabled": true,
+      "bot_menu_order": 2,
+      "bot_checkout_enabled": true,
+      "global_active": true,
+      "market": "MX",
+      "currency": "USD",
+      "base_price_usd": 120.00,
+      "stripe_price_id": "price_SAMPLE_MX_002",
+      "stripe_env": "test",
+      "purchase_mode": "one_time",
+      "requires_human_review_above_qty": 2
+    },
+    {
+      "product_key": "starter_pack_us_v1",
+      "sku": "GBN-US-SP-001",
+      "product_name": "Starter Pack — US Market",
+      "bot_short_label": "Starter Pack (US)",
+      "bot_short_description": "US pricing. Free shipping on orders 2+.",
+      "bot_menu_enabled": true,
+      "bot_menu_order": 1,
+      "bot_checkout_enabled": true,
+      "global_active": true,
+      "market": "US",
+      "currency": "USD",
+      "base_price_usd": 49.00,
+      "stripe_price_id": "price_SAMPLE_US_001",
+      "stripe_env": "test",
+      "purchase_mode": "one_time",
+      "requires_human_review_above_qty": 5
+    }
+  ],
+  "shipping_rules": {
+    "MX": [
+      { "min_qty": 1, "max_qty": 4,  "shipping_usd": 15 },
+      { "min_qty": 5, "max_qty": 10, "shipping_usd": 25 },
+      { "min_qty": 11, "max_qty": 20, "shipping_usd": 40 }
+    ],
+    "US": "calculated_per_product_free_above_2"
+  }
+}

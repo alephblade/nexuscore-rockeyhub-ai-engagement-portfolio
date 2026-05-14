@@ -1,0 +1,57 @@
+﻿{
+  "_note": "Representative sample — fictional lead pipeline data.",
+  "leads": [
+    {
+      "id": "lead-sample-001",
+      "name": "Sample Lead A",
+      "company": "Empresa Ejemplo S.A.",
+      "role": "Director Comercial",
+      "phone": "+52 55 0000 0001",
+      "email": "lead.a@example.com",
+      "industry": "Retail",
+      "status": "interested",
+      "tags": ["hot", "referral"],
+      "notes": "Interested in Pro Pack. Follow up next Tuesday.",
+      "assigned_to": "leader-uuid-sample-001",
+      "organization_id": "sample-org-uuid-0001",
+      "created_at": "2026-05-10T14:00:00Z"
+    },
+    {
+      "id": "lead-sample-002",
+      "name": "Sample Lead B",
+      "company": "Independiente",
+      "role": "Solopreneur",
+      "phone": "+52 55 0000 0002",
+      "email": "lead.b@example.com",
+      "industry": "Health & Wellness",
+      "status": "contacted",
+      "tags": ["new", "whatsapp-source"],
+      "notes": "Sent Starter Pack info via WhatsApp. Awaiting reply.",
+      "assigned_to": "leader-uuid-sample-001",
+      "organization_id": "sample-org-uuid-0001",
+      "created_at": "2026-05-12T09:30:00Z"
+    },
+    {
+      "id": "lead-sample-003",
+      "name": "Sample Lead C",
+      "company": "Distribuidora Norte",
+      "role": "Gerente de Compras",
+      "phone": "+1 310 000 0001",
+      "email": "lead.c@example.com",
+      "industry": "Distribution",
+      "status": "new",
+      "tags": ["usa-market", "bulk-potential"],
+      "notes": "US lead. Interested in bulk order. Route to human review.",
+      "assigned_to": "leader-uuid-sample-002",
+      "organization_id": "sample-org-uuid-0001",
+      "created_at": "2026-05-14T11:00:00Z"
+    }
+  ],
+  "pipeline_summary": {
+    "new": 1,
+    "contacted": 1,
+    "interested": 1,
+    "closed": 0,
+    "lost": 0
+  }
+}
