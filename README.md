@@ -5,7 +5,7 @@
 
 ---
 
-> **Note**: This repository is a curated AI Engagement and Creative Technology portfolio sample based on the design approach behind NexusCore AI and RockeyHub.
+> **Note**: This repository is a portfolio sample based on the design approach behind NexusCore AI and RockeyHub.
 > It is **not** the full production codebase. It demonstrates how I design conversational workflows, WhatsApp Business journeys, lead qualification logic, product/catalog routing, checkout orchestration, automation rules, QA processes, and analytics-ready engagement systems — without exposing proprietary code, credentials, or sensitive infrastructure.
 
 ---
