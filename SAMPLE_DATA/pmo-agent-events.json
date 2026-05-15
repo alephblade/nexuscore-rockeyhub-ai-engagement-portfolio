@@ -1,0 +1,44 @@
+[
+  {
+    "event_type": "campaign_follow_up_required",
+    "campaign_id": "demo_campaign_001",
+    "source": "whatsapp_engagement_flow",
+    "operator_channel": "telegram",
+    "priority": "medium",
+    "current_status": "lead_interested",
+    "recommended_action": "send_product_education_follow_up",
+    "human_handoff_required": false,
+    "log_required": true,
+    "dashboard_update": "follow_up_pending"
+  },
+  {
+    "event_type": "human_handoff_required",
+    "conversation_id": "demo_conversation_042",
+    "reason": "checkout_question",
+    "operator_channel": "telegram",
+    "priority": "high",
+    "recommended_action": "send_summary_to_operator",
+    "log_required": true,
+    "dashboard_update": "handoff_pending"
+  },
+  {
+    "event_type": "technical_issue_detected",
+    "workflow": "checkout_orchestration",
+    "operator_channel": "telegram",
+    "issue_category": "missing_confirmation_event",
+    "severity": "medium",
+    "recommended_action": "review_checkout_event_mapping",
+    "owner": "technical_operations",
+    "follow_up_required": true
+  },
+  {
+    "event_type": "decision_log_required",
+    "workflow": "product_routing",
+    "operator_channel": "telegram",
+    "decision": "Route uncertain product intent to human-assisted flow",
+    "reason": "Avoid inaccurate product recommendation",
+    "owner": "operations",
+    "impact": "Improves QA and customer experience",
+    "follow_up_required": true
+  }
+]

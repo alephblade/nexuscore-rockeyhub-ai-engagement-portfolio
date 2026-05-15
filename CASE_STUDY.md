@@ -1,4 +1,4 @@
-﻿# Case Study: NexusCore AI / RockeyHub
+# Case Study: NexusCore AI / RockeyHub
 
 ## Project
 
@@ -15,6 +15,8 @@ RockeyHub is the operational and commerce-oriented workflow layer designed to co
 **Founder, Product Builder & AI Engagement Architect**
 
 I conceived the product, designed the conversational commerce architecture, built the NexusCore AI layer, defined the multi-tenant data model, and coordinated the full technical implementation — from Edge Function design to WhatsApp state machine logic, checkout orchestration, and AI-assisted messaging.
+
+I also designed a conceptual PMO-style agentic workflow layer operated through Telegram as an internal command and notification interface. This layer supports task coordination, decision tracking, risk visibility, documentation continuity, human handoff and operational follow-up across campaign, sales, product and infrastructure workflows.
 
 ---
 
@@ -72,6 +74,16 @@ Tracking / Logs / Dashboard
         ↓
 Optimization Loop
 ```
+
+---
+
+## Operational Automation Layer
+
+In addition to conversational engagement and checkout orchestration, RockeyHub is designed to support PMO-style operational automation. This layer coordinates tasks, decisions, risks, documentation, follow-up actions and execution visibility across marketing, sales, product and infrastructure workflows.
+
+The current operational interface for this PMO-style agent is Telegram. Telegram is used as an internal operator channel for commands, alerts, summaries, task updates and follow-up coordination. WhatsApp may be added later as an additional business-facing or client-facing interaction channel.
+
+This portfolio sample documents the concept in docs/AGENTIC_WORKFLOW_LAYER.md. The document does not include production n8n workflows, credentials, private endpoints, internal business rules or sensitive execution logic.
 
 ---
 

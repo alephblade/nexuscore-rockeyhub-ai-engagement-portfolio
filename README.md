@@ -1,11 +1,11 @@
-﻿# RockeyHub — AI Engagement & Checkout Orchestration Platform
+# RockeyHub — AI Engagement & Checkout Orchestration Platform
 
 > **Powered by NexusCore AI**
 > *Conversational intelligence, workflow automation, lead qualification and operational support layer.*
 
 ---
 
-> **Note**: This repository is a portfolio sample based on the design approach behind NexusCore AI and RockeyHub.
+> **Note**: This repository is a curated AI Engagement and Creative Technology portfolio sample based on the design approach behind NexusCore AI and RockeyHub.
 > It is **not** the full production codebase. It demonstrates how I design conversational workflows, WhatsApp Business journeys, lead qualification logic, product/catalog routing, checkout orchestration, automation rules, QA processes, and analytics-ready engagement systems — without exposing proprietary code, credentials, or sensitive infrastructure.
 
 ---
@@ -61,6 +61,16 @@ This platform is the intelligent engagement layer that keeps campaigns alive aft
 
 ---
 
+## Operational Automation & Agentic Workflow Layer
+
+This section documents the conceptual PMO-style automation layer behind RockeyHub / NexusCore AI. It shows how agentic workflows can coordinate tasks, decisions, risks, documentation, notifications, follow-up actions and operational visibility across campaign, sales, infrastructure and product workflows.
+
+The operational agent is currently designed to be accessed through Telegram as an internal operator interface, allowing fast interaction with task updates, decision summaries, alerts and follow-up actions. WhatsApp may be added later as an additional channel for business-facing workflows.
+
+See: [docs/AGENTIC_WORKFLOW_LAYER.md](docs/AGENTIC_WORKFLOW_LAYER.md)
+
+---
+
 ## Repository Structure
 
 ```
@@ -79,6 +89,8 @@ nexuscore-rockeyhub-ai-engagement-portfolio/
 ├── QA_CHECKLIST.md                ← QA for conversational + AI systems
 ├── COMPLIANCE_NOTES.md            ← WhatsApp Business compliance design
 ├── ANALYTICS_AND_TRACKING.md      ← Events, metrics, optimization loop
+├── docs/
+│   └── AGENTIC_WORKFLOW_LAYER.md  ← PMO-style automation and Telegram interaction
 ├── LICENSE.md
 │
 ├── SAMPLE_DATA/
